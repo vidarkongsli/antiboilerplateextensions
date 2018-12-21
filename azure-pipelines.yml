@@ -5,6 +5,7 @@
 
 variables:
   testproject : './src/antiboilerplate.tests/antiboilerplate.tests.csproj'
+  buildConfiguration : 'release'
 
 trigger:
 - master
@@ -21,6 +22,7 @@ steps:
   displayName: 'Restore Nuget packages'
 
 - script: dotnet build $(testproject) --configuration $(buildConfiguration)
+  displayName: 'Build projects'
 
 - task: DotNetCoreCLI@2
   inputs:
