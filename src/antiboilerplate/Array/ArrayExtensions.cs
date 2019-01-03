@@ -7,8 +7,9 @@ namespace Antiboilerplate.Array
     {
         public static void Deconstruct<T>(this IEnumerable<T> @this, out T first, out IEnumerable<T> rest)
         {
-            first = @this.FirstOrDefault();
-            rest = @this.Skip(1);
+            var array = @this.ToArray();
+            first = array.FirstOrDefault();
+            rest = array.Skip(1);
         }
 
         public static void Deconstruct<T>(this IEnumerable<T> @this, out T first, out T second, out IEnumerable<T> rest) =>
