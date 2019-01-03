@@ -4,9 +4,15 @@ Remove boilerplate from your C# code.
 
 [![Build Status](https://dev.azure.com/vidarkongsli/vidarkongsli/_apis/build/status/vidarkongsli.antiboilerplateextensions?branchName=master)](https://dev.azure.com/vidarkongsli/vidarkongsli/_build/latest?definitionId=1?branchName=master)
 
+## Installation
+
+```bash
+dotnet add package antiboilerplate --version 1.1.0
+```
+
 ## Functional
 
-Sprinkle some functional magic on your C# code
+Sprinkle some    functional magic on your C# code
 
 ### Map
 
