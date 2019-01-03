@@ -3,7 +3,7 @@ using Antiboilerplate.Disposables;
 using FluentAssertions;
 using Xunit;
 
-namespace antiboilerplate.tests
+namespace Antiboilerplate.Tests
 {
     public class DisposableTests
     {

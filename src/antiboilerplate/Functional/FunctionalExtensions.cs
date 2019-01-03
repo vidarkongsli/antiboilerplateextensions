@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace antiboilerplate.Functional
+namespace Antiboilerplate.Functional
 {
     public static class FunctionalExtensions
     {

@@ -1,9 +1,9 @@
 using System.Linq;
-using antiboilerplate.Functional;
+using Antiboilerplate.Functional;
 using FluentAssertions;
 using Xunit;
 
-namespace Antiboilerplate.tests
+namespace Antiboilerplate.Tests
 {
     public class FunctionalTests
     {

@@ -1,8 +1,8 @@
-﻿using antiboilerplate.String;
+﻿using Antiboilerplate.String;
 using FluentAssertions;
 using Xunit;
 
-namespace antiboilerplate.tests
+namespace Antiboilerplate.Tests
 {
     public class StringTests
     {

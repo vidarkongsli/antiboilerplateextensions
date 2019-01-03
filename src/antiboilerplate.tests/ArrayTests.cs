@@ -4,7 +4,7 @@ using Antiboilerplate.Array;
 using FluentAssertions;
 using Xunit;
 
-namespace antiboilerplate.tests
+namespace Antiboilerplate.Tests
 {
     public class ArrayTests
     {

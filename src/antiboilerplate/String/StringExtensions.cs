@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace antiboilerplate.String
+namespace Antiboilerplate.String
 {
     public static class StringExtensions
     {
