@@ -123,3 +123,33 @@ using (var file = File.OpenText("somefile.txt"))
     text = file.ReadToEnd();
 }
 ```
+
+## Embedded resources
+
+Read an embedded resource:
+
+```csharp
+var data = await EmbeddedResource.Read("Antiboilerplate.tests.TestData.ConfigurationTestData.json",
+    Assembly.GetExecutingAssembly());
+```
+
+Read a Json file by naming convention. Add a marker type in with the same name and in the same namespace as the embedded resource:
+
+```csharp
+// Declare type in the same namespace as ConfigurationTestData.json
+internal class ConfigurationTestData {}
+...
+string data = await EmbeddedResource.ReadJson<ConfigurationTestData>();
+```
+
+As above, but parse the Json file using `DataContractJsonSerializer`:
+
+```csharp
+ConfigurationTestContents config = await EmbeddedResource.ReadAndDeserializeJson<ConfigurationTestData, ConfigurationTestContents>();
+```
+
+Reads and parses and XML file:
+
+```csharp
+XDocument data = await EmbeddedResource.ReadXml<XmlTestData>();
+```
