@@ -153,3 +153,25 @@ Reads and parses and XML file:
 ```csharp
 XDocument data = await EmbeddedResource.ReadXml<XmlTestData>();
 ```
+
+## URL
+
+Parse the query from a URI:
+
+```csharp
+IDictionary<string,string> query = new Uri("http://host/path?a=1&b=2").ParseQuery();
+var a = query["a"]; // => 1
+```
+
+Parse the query from a string:
+
+```csharp
+IDictionary<string,string> query = "http://host/path?a=1&b=2".ParseQuery();
+var a = query["a"]; // => 1
+```
+
+Create URI from string:
+
+```csharp
+Uri uri = "http://host/path?a=1&b=2".ToUri();
+```
