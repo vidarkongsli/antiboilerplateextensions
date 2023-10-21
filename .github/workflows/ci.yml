@@ -1,0 +1,46 @@
+name: antiboilerplate CI
+
+on:
+  push:
+    branches: ["master"]
+    paths:
+      - "src/**"
+
+  pull_request:
+    branches: ["master"]
+    paths:
+      - "src/**"
+
+env:
+  LIBRARY_PATH: "src/antiboilerplate/"
+  TEST_PATH: "src/antiboilerplate.tests/"
+  DOTNET_VERSION: "6.0"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build app
+    steps:
+      - name: "Checkout GitHub action"
+        uses: actions/checkout@v2
+      - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+      - name: Run tests
+        run: dotnet test --configuration Release --logger trx --results-directory "TestResults"
+        working-directory: "${{ env.TEST_PATH }}"
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: dotnet-test-results
+          path: "${{ env.TEST_PATH }}TestResults"
+      - name: Publish
+        shell: pwsh
+        run: dotnet pack antiboilerplate.csproj --configuration Release --include-symbols -p:SymbolPackageFormat=snupkg --output ./
+        working-directory: "${{ env.LIBRARY_PATH }}"
+      - name: Package App
+        uses: actions/upload-artifact@v1
+        with:
+          name: library
+          path: ${{ env.LIBRARY_PATH }}
