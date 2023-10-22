@@ -20,7 +20,7 @@ namespace antiboilerplate.Web
         public static Url CreateForHost(string host) => Create(new UriBuilder().Then(b => b.Host = host));
 
         public Url WithPath(string path) => this.Then(x => x._builder.Path = path);
-        public Url WithScheme(Scheme scheme)
+        public Url With(Scheme scheme)
         {
             switch (scheme)
             {

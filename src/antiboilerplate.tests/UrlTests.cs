@@ -15,7 +15,7 @@ namespace Antiboilerplate.Tests
         public void NormalCases(Url.Scheme scheme, string host, string path,
             string username, string password, string expectedUrl)
         {
-            var url = Url.Create().WithScheme(scheme).WithHost(host);
+            var url = Url.Create().With(scheme).WithHost(host);
             if (path != null) url.WithPath(path);
             if (username != null) url.WithUsername(username);
             if (password != null) url.WithPassword(password);
