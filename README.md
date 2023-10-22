@@ -7,7 +7,7 @@ Remove boilerplate from your C# code.
 ## Installation
 
 ```bash
-dotnet add package antiboilerplate --version 1.2.0
+dotnet add package antiboilerplate --version 1.4.0
 ```
 
 ## Functional
@@ -166,7 +166,10 @@ var a = query["a"]; // => 1
 Parse the query from a string:
 
 ```csharp
-IDictionary<string,string> query = "http://host/path?a=1&b=2".ParseQuery();
+IDictionary<string,string> query = "http://host/path?a=1&b=2"
+    .ParseQueryString()
+    .ToDictionary(q => q.Key, q => q.Value);
+    
 var a = query["a"]; // => 1
 ```
 
@@ -174,4 +177,27 @@ Create URI from string:
 
 ```csharp
 Uri uri = "http://host/path?a=1&b=2".ToUri();
+```
+
+Build a URI:
+
+```csharp
+Uri uri = Url.Create()
+    .With(Url.Scheme.Http)
+    .WithHostname("www.iana.org")
+    .WithPath("about")
+    .WithQueryParameter("a", "1")
+    .WithFragment("chapter1");
+
+Console.WriteLine(uri.AbsoluteUri); // => "http://www.iana.org/about?a=1#chapter1"
+```
+
+Start with an existing one and build a URI:
+
+```csharp
+Uri uri = Url.Create("http://www.iana.org")
+    .With(Url.Scheme.Https)
+    .WithQueryParameter("a", "1");
+
+Console.WriteLine(uri.AbsoluteUri); // => "https://www.iana.org/?a=1"
 ```

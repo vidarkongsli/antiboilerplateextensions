@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using antiboilerplate.Web;
 using FluentAssertions;
 using Xunit;
@@ -40,12 +41,27 @@ namespace Antiboilerplate.Tests
         [Fact]
         public void ShouldWorkWithUriClass()
         {
-            var builder = new UriBuilder("https", "test.com", 80, "foo") {Query = "a=1&b=2"};
+            var builder = new UriBuilder("https", "test.com", 80, "foo") { Query = "a=1&b=2" };
             var query = builder.Uri.ParseQuery();
 
             query.Keys.Count.Should().Be(2);
             query["a"].Should().Be("1");
             query["b"].Should().Be("2");
+        }
+
+        [Fact]
+        public void ShouldDecodeQueryKeys()
+        {
+            "vidar+kongsli=1".ParseQueryString().Single().Key.Should().Be("vidar kongsli");
+        }
+
+        [Fact]
+        public void ShouldHandleNonUniqueQueryStringKeys()
+        {
+            var query = "a=1&b=2&a=3".ParseQueryString();
+            query.Where(n => n.Key == "a").Should().HaveCount(2)
+                .And.Contain(n => n.Value == "1")
+                .And.Contain(n => n.Value == "3");
         }
     }
 }

@@ -35,5 +35,11 @@ namespace Antiboilerplate.Tests
             "\t".IsNullOrWhitespace().Should().BeTrue("A tab is whitespace");
             "Not empty".IsNullOrWhitespace().Should().BeFalse();
         }
+
+        [Fact]
+        public void ShouldMergeStrings() => new[]{"1", "2"}.AggregateWithDelimiter(", ").Should().Be("1, 2");
+
+        [Fact]
+        public void ShouldMergeEmptyEnumerable() => new string[0].AggregateWithDelimiter(", ").Should().Be(string.Empty);
     }
 }
