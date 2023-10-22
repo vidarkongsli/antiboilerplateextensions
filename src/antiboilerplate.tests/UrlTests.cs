@@ -56,5 +56,15 @@ namespace Antiboilerplate.Tests
             Uri url = Url.CreateForHost("localhost");
             url.Host.Should().Be("localhost");
         }
+
+        [Fact]
+        public void ShouldBeAbleToAddPathComponents()
+        {
+            Uri url = Url.CreateForHost("localhost")
+                .AddPathComponent("a")
+                .AddPathComponent("/b/");
+
+            url.AbsoluteUri.Should().Be("https://localhost/a/b");
+        }
     }
 }

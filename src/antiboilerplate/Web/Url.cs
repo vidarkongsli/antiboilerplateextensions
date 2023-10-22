@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -17,9 +18,25 @@ namespace antiboilerplate.Web
 
         public static Url Create(string url) => Create(new UriBuilder(url));
 
-        public static Url CreateForHost(string host) => Create(new UriBuilder().Then(b => b.Host = host));
+        public static Url CreateForHost(string host) => Create(new UriBuilder().Then(b => b.Scheme = "https").Then(b => b.Host = host));
 
-        public Url WithPath(string path) => this.Then(x => x._builder.Path = path);
+        public Url WithPath(string path) => this.Then(x => x._builder.Path = path.Trim());
+
+        private static readonly char[] _slash = new[] { '/' };
+        public Url AddPathComponent(string pathComponent)
+        {
+            switch (_builder.Path)
+            {
+                case null:
+                case "/":
+                case "": _builder.Path = pathComponent.Trim(_slash); break;
+                default:
+                    _builder.Path += _builder.Path.EndsWith("/") ? "" : "/" + pathComponent.Trim(_slash);
+                    break;
+            }
+            return this;
+        }
+
         public Url With(Scheme scheme)
         {
             switch (scheme)
