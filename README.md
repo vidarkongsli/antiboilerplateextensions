@@ -183,16 +183,19 @@ XDocument data = await EmbeddedResource.ReadXml<XmlTestData>();
 Parse the query from a URI:
 
 ```csharp
-IDictionary<string,string> query = new Uri("http://host/path?a=1&b=2").ParseQuery();
-var a = query["a"]; // => 1
+IDictionary<string,string[]> query = new Uri("http://host/path?a=1&b=2")
+    .ParseQueryString()
+    .ToDictionaryOfArrays();
+
+var a = query["a"].Single(); // => 1
 ```
 
 Parse the query from a string:
 
 ```csharp
-IDictionary<string,string> query = "http://host/path?a=1&b=2&a=3"
+IDictionary<string,string[]> query = "http://host/path?a=1&b=2&a=3"
     .ParseQueryString()
-    .ToDictionaryOfArrays(); // IEnumerable<KeyValuePair<TKey, TValue>> -> IDictionary<TKey, TValue[]>
+    .ToDictionaryOfArrays();
     
 var a = query["a"]; // => ["1", "3"]
 ```
