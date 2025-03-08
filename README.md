@@ -20,7 +20,7 @@ Map your object of type `TIn` to type `TOut` using the provided mapping function
 
 ```csharp
 var httpRequest = someObject
-    .Map(o => JsonConvert.SerializeObject(o))
+    .Map(JsonSerializer.Serialize) // method group
     .Map(o => new StringContent(o, Encoding.UTF8, "application/json"))
     .Map(o => new HttpRequestMessage(HttpMethod.Post,"chat.postMessage")
         {
@@ -34,7 +34,7 @@ Perform action on object before returning it.
 
 ```csharp
 public string CreateMessage(string data)
-    => $"Some message: {data}".Then(s => Console.WriteLine(s));
+    => $"Some message: {data}".Then(Console.WriteLine);
 ```
 
 ### AsCollection
