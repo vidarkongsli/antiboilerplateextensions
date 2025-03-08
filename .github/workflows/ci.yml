@@ -14,7 +14,7 @@ on:
 env:
   LIBRARY_PATH: "src/antiboilerplate/"
   TEST_PATH: "src/antiboilerplate.tests/"
-  DOTNET_VERSION: "6.0"
+  DOTNET_VERSION: "8.0"
 
 jobs:
   build:
