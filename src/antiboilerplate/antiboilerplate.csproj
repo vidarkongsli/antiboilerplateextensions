@@ -8,16 +8,9 @@
     <Authors>Vidar Kongsli</Authors>
     <Company>kongs.li AS</Company>
     <RepositoryUrl>https://github.com/vidarkongsli/antiboilerplateextensions</RepositoryUrl>
-  </PropertyGroup>
-  <PropertyGroup>
-    ...
     <PackageReadmeFile>README.MD</PackageReadmeFile>
-    ...
-</PropertyGroup>
-
-<ItemGroup>
-    ...
-    <None Include="../../README.md" Pack="true" PackagePath="\"/>
-    ...
-</ItemGroup>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
 </Project>
