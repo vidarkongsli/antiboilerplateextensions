@@ -57,6 +57,21 @@ new []{1, 2, 3}
     .Each(Console.WriteLine); // method group
 ```
 
+## Enumerables
+
+Turn a list of key-value pairs into a dictionary (where keys are not unique)
+
+```csharp
+var dictionary = new List<KeyValuePair<string, string>>
+{
+    new("a", "1"),
+    new("b", "2"),
+    new("a", "3")
+}.ToDictionaryOfArrays(); // IDictionary<string, string[]>
+
+var a = dictionary["a"]; // -> ["1", "3"]
+```
+
 ## Array
 
 Deconstruct arrays (C# 7).
@@ -175,11 +190,11 @@ var a = query["a"]; // => 1
 Parse the query from a string:
 
 ```csharp
-IDictionary<string,string> query = "http://host/path?a=1&b=2"
+IDictionary<string,string> query = "http://host/path?a=1&b=2&a=3"
     .ParseQueryString()
-    .ToDictionary(q => q.Key, q => q.Value);
+    .ToDictionaryOfArrays(); // IEnumerable<KeyValuePair<TKey, TValue>> -> IDictionary<TKey, TValue[]>
     
-var a = query["a"]; // => 1
+var a = query["a"]; // => ["1", "3"]
 ```
 
 Create URI from string:
