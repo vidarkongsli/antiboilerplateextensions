@@ -37,9 +37,11 @@ namespace Antiboilerplate.Tests
         }
 
         [Fact]
-        public void ShouldMergeStrings() => new[]{"1", "2"}.AggregateWithDelimiter(", ").Should().Be("1, 2");
+        public void ShouldMergeStrings() => new[]{"1", "2"}
+            .AggregateWithDelimiter(", ").Should().Be("1, 2");
 
         [Fact]
-        public void ShouldMergeEmptyEnumerable() => new string[0].AggregateWithDelimiter(", ").Should().Be(string.Empty);
+        public void ShouldMergeEmptyEnumerable() => System.Array.Empty<string>()
+            .AggregateWithDelimiter(", ").Should().Be(string.Empty);
     }
 }
