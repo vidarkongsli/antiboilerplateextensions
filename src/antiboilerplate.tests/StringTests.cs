@@ -25,7 +25,16 @@ namespace Antiboilerplate.Tests
             string.Empty.IsNullOrEmpty().Should().BeTrue("An empty string should report true");
             "Not empty".IsNullOrEmpty().Should().BeFalse();
         }
-        
+
+        [Fact]
+        public void ShouldReportHasTextCorrectly()
+        {
+            const string nullString = null;
+            nullString.HasText().Should().BeFalse("A null string should report false");
+            string.Empty.HasText().Should().BeFalse("An empty string should report false");
+            "Not empty".HasText().Should().BeTrue();
+        }
+
         [Fact]
         public void ShouldReportIsNullOrWhitespaceCorrectly()
         {

@@ -87,6 +87,15 @@ if (someString.IsNullOrWhitespace())
 }
 ```
 
+### HasText
+
+```csharp
+if (someString.HasText()) // Inverse of .IsNullOrWhitespace
+{
+    ...
+}
+```
+
 ### ToUtf8Base64
 
 Example: creating a basic authorization header.
