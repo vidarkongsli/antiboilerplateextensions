@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using Antiboilerplate.String;
 using antiboilerplate.Web;
 using FluentAssertions;
 using Xunit;
