@@ -1,4 +1,4 @@
-name: antiboilerplate CI
+name: antiboilerplate CI/CD
 
 on:
   push:
@@ -52,7 +52,12 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: library
-          path: ${{ env.LIBRARY_PATH }}
+          path: |
+            ${{ env.LIBRARY_PATH }}/*.nupkg
+            ${{ env.LIBRARY_PATH }}/*.snupkg
+      - name: Nuget push
+        run: dotnet nuget push "${{ env.LIBRARY_PATH }}" -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
+        if: github.event_name == 'workflow_dispatch'
       - run: |
           git config user.name "Vidar Kongsli"
           git config user.email "vidar@kongs.li"
