@@ -9,6 +9,7 @@
     <Company>kongs.li AS</Company>
     <RepositoryUrl>https://github.com/vidarkongsli/antiboilerplateextensions</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
   <ItemGroup>
     <None Include="../../README.md" Pack="true" PackagePath="\" />
