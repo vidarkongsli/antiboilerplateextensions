@@ -1,4 +1,4 @@
-name: antiboilerplate CI
+name: antiboilerplate CI/CD
 
 on:
   push:
@@ -44,15 +44,20 @@ jobs:
         with:
           file: "${{ env.LIBRARY_PATH }}/antiboilerplate.csproj"
           version: bump-build
-      - name: Publish
+      - name: Create nuget package
         shell: pwsh
         run: dotnet pack antiboilerplate.csproj --configuration Release --include-symbols -p:SymbolPackageFormat=snupkg --output ./
         working-directory: "${{ env.LIBRARY_PATH }}"
-      - name: Upload nuget
+      - name: Upload nuget package to artifacts
         uses: actions/upload-artifact@v4
         with:
           name: library
-          path: ${{ env.LIBRARY_PATH }}
+          path: |
+            ${{ env.LIBRARY_PATH }}/*.nupkg
+            ${{ env.LIBRARY_PATH }}/*.snupkg
+      - name: Push package to nuget
+        run: dotnet nuget push "${{ env.LIBRARY_PATH }}antiboilerplate.${{ steps.update.outputs.newVersion }}.nupkg" -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
+        if: github.event_name == 'workflow_dispatch'
       - run: |
           git config user.name "Vidar Kongsli"
           git config user.email "vidar@kongs.li"
@@ -60,3 +65,4 @@ jobs:
           git commit -m "Update project version to ${{ steps.update.outputs.newVersion }}"
           git push
         if: github.event_name == 'workflow_dispatch'
+        name: Update version in .csproj

@@ -7,7 +7,7 @@ Remove boilerplate from your C# code.
 ## Installation
 
 ```bash
-dotnet add package antiboilerplate --version 1.4.0
+dotnet add package antiboilerplate --version 1.4.3
 ```
 
 ## Functional
