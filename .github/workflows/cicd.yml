@@ -12,11 +12,7 @@ on:
       - "src/**"
 
   workflow_dispatch:
-    inputs:
-      release-message:
-        description: "Message for the release"
-        required: true
-        type: string
+
 env:
   LIBRARY_PATH: "src/antiboilerplate/"
   TEST_PATH: "src/antiboilerplate.tests/"
