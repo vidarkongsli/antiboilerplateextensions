@@ -11,6 +11,12 @@ on:
     paths:
       - "src/**"
 
+  workflow_dispatch:
+    inputs:
+      release-message:
+        description: "Message for the release"
+        required: true
+        type: string
 env:
   LIBRARY_PATH: "src/antiboilerplate/"
   TEST_PATH: "src/antiboilerplate.tests/"
@@ -36,12 +42,17 @@ jobs:
           name: dotnet-test-results
           path: "${{ env.TEST_PATH }}TestResults"
         if: ${{ always() }}
+      - name: Bump version
+        uses: vers-one/dotnet-project-version-updater@v1.7
+        with:
+          file: "${{ env.LIBRARY_PATH }}/antiboilerplate.csproj"
+          version: "?.?.${{ github.run_number }}"
       - name: Publish
         shell: pwsh
         run: dotnet pack antiboilerplate.csproj --configuration Release --include-symbols -p:SymbolPackageFormat=snupkg --output ./
         working-directory: "${{ env.LIBRARY_PATH }}"
-      # - name: Package App
-      #   uses: actions/upload-artifact@v1
-      #   with:
-      #     name: library
-      #     path: ${{ env.LIBRARY_PATH }}
+      - name: Upload nuget
+        uses: actions/upload-artifact@v4
+        with:
+          name: library
+          path: ${{ env.LIBRARY_PATH }}
