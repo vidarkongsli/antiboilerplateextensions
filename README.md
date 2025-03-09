@@ -7,7 +7,7 @@ Remove boilerplate from your C# code.
 ## Installation
 
 ```bash
-dotnet add package antiboilerplate --version 1.2.0
+dotnet add package antiboilerplate --version 1.4.0
 ```
 
 ## Functional
@@ -20,7 +20,7 @@ Map your object of type `TIn` to type `TOut` using the provided mapping function
 
 ```csharp
 var httpRequest = someObject
-    .Map(o => JsonConvert.SerializeObject(o))
+    .Map(JsonSerializer.Serialize) // method group
     .Map(o => new StringContent(o, Encoding.UTF8, "application/json"))
     .Map(o => new HttpRequestMessage(HttpMethod.Post,"chat.postMessage")
         {
@@ -34,7 +34,7 @@ Perform action on object before returning it.
 
 ```csharp
 public string CreateMessage(string data)
-    => $"Some message: {data}".Then(s => Console.WriteLine(s));
+    => $"Some message: {data}".Then(Console.WriteLine);
 ```
 
 ### AsCollection
@@ -55,6 +55,21 @@ Perform an action on each element in an array (similar to `foreach`).
 new []{1, 2, 3}
     .Select(x => x * x)
     .Each(Console.WriteLine); // method group
+```
+
+## Enumerables
+
+Turn a list of key-value pairs into a dictionary (where keys are not unique)
+
+```csharp
+var dictionary = new List<KeyValuePair<string, string>>
+{
+    new("a", "1"),
+    new("b", "2"),
+    new("a", "3")
+}.ToDictionaryOfArrays(); // IDictionary<string, string[]>
+
+var a = dictionary["a"]; // -> ["1", "3"]
 ```
 
 ## Array
@@ -82,6 +97,15 @@ if (someString.IsNullOrEmpty())
 
 ```csharp
 if (someString.IsNullOrWhitespace())
+{
+    ...
+}
+```
+
+### HasText
+
+```csharp
+if (someString.HasText()) // Inverse of .IsNullOrWhitespace
 {
     ...
 }
@@ -159,19 +183,48 @@ XDocument data = await EmbeddedResource.ReadXml<XmlTestData>();
 Parse the query from a URI:
 
 ```csharp
-IDictionary<string,string> query = new Uri("http://host/path?a=1&b=2").ParseQuery();
-var a = query["a"]; // => 1
+IDictionary<string,string[]> query = new Uri("http://host/path?a=1&b=2")
+    .ParseQueryString()
+    .ToDictionaryOfArrays();
+
+var a = query["a"].Single(); // => 1
 ```
 
 Parse the query from a string:
 
 ```csharp
-IDictionary<string,string> query = "http://host/path?a=1&b=2".ParseQuery();
-var a = query["a"]; // => 1
+IDictionary<string,string[]> query = "http://host/path?a=1&b=2&a=3"
+    .ParseQueryString()
+    .ToDictionaryOfArrays();
+    
+var a = query["a"]; // => ["1", "3"]
 ```
 
 Create URI from string:
 
 ```csharp
 Uri uri = "http://host/path?a=1&b=2".ToUri();
+```
+
+Build a URI:
+
+```csharp
+Uri uri = Url.Create()
+    .With(Url.Scheme.Http)
+    .WithHostname("www.iana.org")
+    .WithPath("about")
+    .WithQueryParameter("a", "1")
+    .WithFragment("chapter1");
+
+Console.WriteLine(uri.AbsoluteUri); // => "http://www.iana.org/about?a=1#chapter1"
+```
+
+Start with an existing one and build a URI:
+
+```csharp
+Uri uri = Url.Create("http://www.iana.org")
+    .With(Url.Scheme.Https)
+    .WithQueryParameter("a", "1");
+
+Console.WriteLine(uri.AbsoluteUri); // => "https://www.iana.org/?a=1"
 ```
