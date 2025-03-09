@@ -11,6 +11,9 @@
     <PackageReadmeFile>README.MD</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="../../README.md" Pack="true" PackagePath="\" />
+    <None Include="../../README.md" Pack="true" PackagePath="\">
+     <Pack>True</Pack>
+  <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 </Project>
