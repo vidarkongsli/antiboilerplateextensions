@@ -34,7 +34,7 @@ namespace Antiboilerplate.Resources
         /// <summary>
         /// Reads an embedded resource as an XDocument.
         /// </summary>
-        /// <typeparam name="T">A type which full name denotes the name of the embedded resource, without the '.json' at the end.</typeparam>
+        /// <typeparam name="T">A type which full name denotes the name of the embedded resource, without the '.xml' at the end.</typeparam>
         /// <returns></returns>
         public static Task<XDocument> ReadXml<T>()
             => Read<T, XDocument>(XDocument.Load, "xml");

@@ -52,8 +52,12 @@ namespace antiboilerplate.Web
         public Url WithUsername(string userName) => this.Then(x => x._builder.UserName = userName);
         public Url WithPassword(string password) => this.Then(x => x._builder.Password = password);
 
-        public Url WithQueryParameter(string key, string value)
-            => WithQueryParameter(new KeyValuePair<string, string>(key, value));
+        public Url WithQueryParameter(string key, params string[] values)
+        {
+            if (values.Length == 0) WithQueryParameter(new KeyValuePair<string, string>(key, string.Empty));
+            values.Each(v => WithQueryParameter(new KeyValuePair<string, string>(key, v)));
+            return this;
+        }
 
         public Url WithQueryParameter(KeyValuePair<string, string> keyValuePair)
         {
