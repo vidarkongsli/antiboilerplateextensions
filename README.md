@@ -130,6 +130,14 @@ Example: decoding a basic authorization header. (Including array deconstruction)
         .Split(':');
 ```
 
+### AggregateWithDelimiter
+
+Example: join a list of strings with comma and space
+
+```csharp
+var s = new[]{"1", "2"}.AggregateWithDelimiter(", "); // => "1, 2"
+```
+
 ## Disposables
 
 Handle disposable objects without using unnecessary variables.
@@ -172,7 +180,7 @@ As above, but parse the Json file using `DataContractJsonSerializer`:
 ConfigurationTestContents config = await EmbeddedResource.ReadAndDeserializeJson<ConfigurationTestData, ConfigurationTestContents>();
 ```
 
-Reads and parses and XML file:
+Reads and parses an XML file:
 
 ```csharp
 XDocument data = await EmbeddedResource.ReadXml<XmlTestData>();

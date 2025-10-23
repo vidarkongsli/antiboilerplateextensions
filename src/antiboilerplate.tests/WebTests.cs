@@ -12,7 +12,9 @@ public class WebTests
     public void ShouldParseQueryStringLegacy()
     {
         const string testString = "/foo?a=10&b=20";
+#pragma warning disable CS0618 // Type or member is obsolete
         var query = testString.ParseQuery();
+#pragma warning restore CS0618 // Type or member is obsolete
 
         query.Keys.Count.Should().Be(2);
         query["a"].Should().Be("10");
@@ -35,7 +37,9 @@ public class WebTests
     public void ShouldUrlDecodeLegacy()
     {
         const string testString = "/foo?a=https%3A%2F%2Fwww.vg.no%2F&b=20";
+#pragma warning disable CS0618 // Type or member is obsolete
         var query = testString.ParseQuery();
+#pragma warning restore CS0618 // Type or member is obsolete
 
         query["a"].Should().Be("https://www.vg.no/");
     }
@@ -54,7 +58,9 @@ public class WebTests
     public void ShouldWorkWithoutQuestionMarkLegacy()
     {
         const string testString = "a=10&b=20";
+#pragma warning disable CS0618 // Type or member is obsolete
         var query = testString.ParseQuery();
+#pragma warning restore CS0618 // Type or member is obsolete
 
         query.Keys.Count.Should().Be(2);
         query["a"].Should().Be("10");
@@ -75,7 +81,9 @@ public class WebTests
     public void ShouldWorkWithUriClassLegacy()
     {
         var builder = new UriBuilder("https", "test.com", 80, "foo") { Query = "a=1&b=2" };
+#pragma warning disable CS0618 // Type or member is obsolete
         var query = builder.Uri.ParseQuery();
+#pragma warning restore CS0618 // Type or member is obsolete
 
         query.Keys.Count.Should().Be(2);
         query["a"].Should().Be("1");
