@@ -35,6 +35,22 @@ public class UrlTests
     }
 
     [Fact]
+    public void ShouldBeAbleToAddSeveralValuesToSameQueryParameter()
+    {
+        string url = Url.Create().WithHost("localhost")
+            .WithQueryParameter("a", "1", "2");
+        url.Should().EndWith("/?a=1&a=2");
+    }
+
+    [Fact]
+    public void ShouldTolerateAddingQueryParameterWithNoValue()
+    {
+        string url = Url.Create().WithHost("localhost")
+            .WithQueryParameter("a");
+        url.Should().EndWith("/?a=");
+    }
+
+    [Fact]
     public void ShouldBeAbleToUseExistingQueryAndAddParametersToIt()
     {
         string url = Url.Create().WithHost("localhost")
